@@ -12,27 +12,7 @@ const default_rsync_options =
 const errorDeploying = "⚠️ Error deploying";
 
 async function run() {
-  try {
-    const userArguments = getUserArguments();
-
-    console.log(
-      `----------------------------------------------------------------`,
-    );
-    console.log(`🚀 Ben Burgess Canary!`);
-    console.log(
-      `----------------------------------------------------------------`,
-    );
-    await verifyRsyncInstalled();
-    const privateKeyPath = await setupSSHPrivateKey(
-      userArguments.private_ssh_key,
-    );
-    await syncFiles(privateKeyPath, userArguments);
-
-    console.log("✅ Deploy Complete");
-  } catch (error) {
-    console.error(errorDeploying);
-    setFailed(error as any);
-  }
+  console.log("I am here");
 }
 
 run();
