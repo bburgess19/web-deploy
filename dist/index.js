@@ -3437,15 +3437,17 @@ var errorDeploying = "\u26A0\uFE0F Error deploying";
 async function run() {
   try {
     const userArguments = getUserArguments();
-    console.log(`----------------------------------------------------------------`);
-    console.log(`\u{1F680} Thanks for using web deploy. Let's deploy some stuff!`);
-    console.log(`----------------------------------------------------------------`);
-    console.log(`If you found this project helpful, please support it`);
-    console.log(`by giving it a \u2B50 on Github --> https://github.com/SamKirkland/web-deploy`);
-    console.log(`or add a badge \u{1F3F7}\uFE0F to your projects readme --> https://github.com/SamKirkland/web-deploy#badge`);
-    console.log(`----------------------------------------------------------------`);
+    console.log(
+      `----------------------------------------------------------------`
+    );
+    console.log(`\u{1F680} Ben Burgess Canary!`);
+    console.log(
+      `----------------------------------------------------------------`
+    );
     await verifyRsyncInstalled();
-    const privateKeyPath = await setupSSHPrivateKey(userArguments.private_ssh_key);
+    const privateKeyPath = await setupSSHPrivateKey(
+      userArguments.private_ssh_key
+    );
     await syncFiles(privateKeyPath, userArguments);
     console.log("\u2705 Deploy Complete");
   } catch (error) {
@@ -3457,12 +3459,21 @@ run();
 function getUserArguments() {
   return {
     target_server: (0, import_core.getInput)("target-server", { required: true }),
-    destination_path: withDefault((0, import_core.getInput)("destination-path", { required: false }), "./"),
+    destination_path: withDefault(
+      (0, import_core.getInput)("destination-path", { required: false }),
+      "./"
+    ),
     remote_user: (0, import_core.getInput)("remote-user", { required: true }),
     private_ssh_key: (0, import_core.getInput)("private-ssh-key", { required: true }),
-    source_path: withDefault((0, import_core.getInput)("source-path", { required: false }), "./"),
+    source_path: withDefault(
+      (0, import_core.getInput)("source-path", { required: false }),
+      "./"
+    ),
     ssh_port: withDefault((0, import_core.getInput)("ssh-port"), "22"),
-    rsync_options: withDefault((0, import_core.getInput)("rsync-options"), default_rsync_options)
+    rsync_options: withDefault(
+      (0, import_core.getInput)("rsync-options"),
+      default_rsync_options
+    )
   };
 }
 function withDefault(value, defaultValue) {
@@ -3474,18 +3485,22 @@ function withDefault(value, defaultValue) {
 async function syncFiles(privateKeyPath, args) {
   try {
     const rsyncArguments = [];
-    rsyncArguments.push(...(0, import_string_argv.default)(`-e 'ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no'`));
+    rsyncArguments.push(
+      ...(0, import_string_argv.default)(
+        `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`
+      )
+    );
+    console.log("rsyncArguments", rsyncArguments);
     rsyncArguments.push(...(0, import_string_argv.default)(args.rsync_options));
+    console.log("rsyncArguments", rsyncArguments);
     if (args.source_path !== void 0) {
       rsyncArguments.push(args.source_path);
     }
+    console.log("rsyncArguments", rsyncArguments);
     const destination = `${args.remote_user}@${args.target_server}:${args.destination_path}`;
     rsyncArguments.push(destination);
-    return await (0, import_exec.exec)(
-      "rsync",
-      rsyncArguments,
-      mapOutput
-    );
+    console.log("rsyncArguments", rsyncArguments);
+    return await (0, import_exec.exec)("rsync", rsyncArguments, mapOutput);
   } catch (error) {
     (0, import_core.setFailed)(error);
   }
@@ -3495,13 +3510,12 @@ async function verifyRsyncInstalled() {
     await (0, import_command_exists.default)("rsync");
     return;
   } catch (commandExistsError) {
-    throw new Error("rsync not installed. For instructions on how to fix see https://github.com/SamKirkland/web-deploy#rsync-not-installed");
+    throw new Error(
+      "rsync not installed. For instructions on how to fix see https://github.com/SamKirkland/web-deploy#rsync-not-installed"
+    );
   }
 }
-var {
-  HOME,
-  GITHUB_WORKSPACE
-} = process.env;
+var { HOME, GITHUB_WORKSPACE } = process.env;
 async function setupSSHPrivateKey(key) {
   const sshFolderPath = (0, import_path.join)(HOME || __dirname, ".ssh");
   const privateKeyPath = (0, import_path.join)(sshFolderPath, "web_deploy_key");
