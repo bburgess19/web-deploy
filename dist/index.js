@@ -3486,9 +3486,7 @@ async function syncFiles(privateKeyPath, args) {
   try {
     const rsyncArguments = [];
     rsyncArguments.push(
-      ...(0, import_string_argv.default)(
-        `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`
-      )
+      `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`
     );
     console.log("rsyncArguments", rsyncArguments);
     rsyncArguments.push(...(0, import_string_argv.default)(args.rsync_options));

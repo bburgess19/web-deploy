@@ -77,9 +77,7 @@ export async function syncFiles(
     const rsyncArguments: string[] = [];
 
     rsyncArguments.push(
-      ...stringArgv(
-        `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`,
-      ),
+      `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`,
     );
     console.log("rsyncArguments", rsyncArguments);
 
