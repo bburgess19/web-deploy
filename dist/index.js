@@ -3486,16 +3486,16 @@ async function syncFiles(privateKeyPath, args) {
   try {
     const rsyncArguments = [];
     rsyncArguments.push(
-      `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`
+      `-e "ssh -v -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`
     );
     console.log("rsyncArguments", rsyncArguments);
-    rsyncArguments.push(...(0, import_string_argv.default)(args.rsync_options));
+    rsyncArguments.push(...(0, import_string_argv.default)("-v"));
     console.log("rsyncArguments", rsyncArguments);
     if (args.source_path !== void 0) {
       rsyncArguments.push(args.source_path);
     }
     console.log("rsyncArguments", rsyncArguments);
-    const destination = `${args.remote_user}@${args.target_server}:${args.destination_path}`;
+    const destination = `${args.remote_user}@${args.target_server}:./`;
     rsyncArguments.push(destination);
     console.log("rsyncArguments", rsyncArguments);
     return await (0, import_exec.exec)("rsync", rsyncArguments, mapOutput);

@@ -77,11 +77,12 @@ export async function syncFiles(
     const rsyncArguments: string[] = [];
 
     rsyncArguments.push(
-      `-e "ssh -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`,
+      `-e "ssh -v -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`,
     );
     console.log("rsyncArguments", rsyncArguments);
 
-    rsyncArguments.push(...stringArgv(args.rsync_options));
+    // rsyncArguments.push(...stringArgv(args.rsync_options));
+    rsyncArguments.push(...stringArgv("-v"));
     console.log("rsyncArguments", rsyncArguments);
 
     if (args.source_path !== undefined) {
@@ -89,7 +90,7 @@ export async function syncFiles(
     }
     console.log("rsyncArguments", rsyncArguments);
 
-    const destination = `${args.remote_user}@${args.target_server}:${args.destination_path}`;
+    const destination = `${args.remote_user}@${args.target_server}:./`;
     rsyncArguments.push(destination);
     console.log("rsyncArguments", rsyncArguments);
 
