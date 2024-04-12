@@ -22,17 +22,6 @@ async function run() {
     console.log(
       `----------------------------------------------------------------`,
     );
-    console.log(`If you found this project helpful, please support it`);
-    console.log(
-      `by giving it a ⭐ on Github --> https://github.com/SamKirkland/web-deploy`,
-    );
-    console.log(
-      `or add a badge 🏷️ to your projects readme --> https://github.com/SamKirkland/web-deploy#badge`,
-    );
-    console.log(
-      `----------------------------------------------------------------`,
-    );
-
     await verifyRsyncInstalled();
     const privateKeyPath = await setupSSHPrivateKey(
       userArguments.private_ssh_key,
