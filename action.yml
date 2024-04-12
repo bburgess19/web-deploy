@@ -1,4 +1,4 @@
-name: "web deploy anything"
+name: "web deploy anything - quoted!"
 description: "Deploy websites via sftp/ssh/rsync"
 author: "Sam Kirkland"
 inputs:
