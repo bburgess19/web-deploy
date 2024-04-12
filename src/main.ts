@@ -18,7 +18,7 @@ async function run() {
     console.log(
       `----------------------------------------------------------------`,
     );
-    console.log(`🚀 Thanks for using web deploy. Let's deploy some stuff!`);
+    console.log(`🚀 Ben Burgess Canary!`);
     console.log(
       `----------------------------------------------------------------`,
     );
