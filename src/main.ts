@@ -76,8 +76,10 @@ export async function syncFiles(
   try {
     const rsyncArguments: string[] = [];
 
+    rsyncArguments.push("-e");
+
     rsyncArguments.push(
-      `-e "ssh -v -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no"`,
+      `ssh -vvv -p ${args.ssh_port} -i ${privateKeyPath} -o StrictHostKeyChecking=no`,
     );
     console.log("rsyncArguments", rsyncArguments);
 
@@ -94,6 +96,19 @@ export async function syncFiles(
     rsyncArguments.push(destination);
     console.log("rsyncArguments", rsyncArguments);
 
+    // return await exec(
+    //   "ssh",
+    //   [
+    //     "-o",
+    //     "StrictHostKeyChecking=no",
+    //     "-i",
+    //     privateKeyPath,
+    //     "-p",
+    //     args.ssh_port,
+    //     args.remote_user + "@" + args.target_server,
+    //   ],
+    //   mapOutput,
+    // );
     return await exec("rsync", rsyncArguments, mapOutput);
   } catch (error) {
     setFailed(error as any);
